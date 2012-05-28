@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 2011 by Jonas Eickhoff <jonas02401@googlemail.com>
- * Copyright (c) 2011 by Maximilian Güntner <maximilian.guentner@gmail.com>
+ * Copyright (c) 2011-2012 by Maximilian Güntner <maximilian.guentner@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -155,7 +155,23 @@ dmx_fx_watersimulation(uint8_t fxslot_number)
 }
 #endif /*Water end */
 
-
+#ifdef DMX_FX_STATIC
+void
+dmx_fx_static(uint8_t fxslot_number)
+{
+  if (fxslot[fxslot_number].effect_variable[1] == 0x42)
+  {
+    return;
+  }
+  else
+  {
+    fxslot[fxslot_number].device_channel[0] = fxslot[fxslot_number].effect_variable[0];
+    fxslot[fxslot_number].effect_variable[1] = 0x42;
+    fxslot[fxslot_number].speed = 80;
+    dmx_fxslot_setchannels(fxslot_number);
+  }
+}
+#endif
 
 
 void
@@ -201,6 +217,15 @@ dmx_fxslot_init(uint8_t fxslot_number)
       fxslot[fxslot_number].effect_variable[3] = 0;
       break;
 #endif
+#ifdef DMX_FX_STATIC
+    case DMX_FXLIST_STATIC: //static channel
+      fxslot[fxslot_number].max_device_channels = 1;
+      fxslot[fxslot_number].effect_variable[0] =  fxslot[fxslot_number].speed;
+      fxslot[fxslot_number].effect_variable[1] = 0;
+      //set as soon as possible
+      fxslot[fxslot_number].speed = 1;
+      break;
+#endif
   }
 
 }
@@ -242,6 +267,11 @@ dmx_fxslot_process()
 #ifdef DMX_FX_WATER
           case DMX_FXLIST_WATERSIMULATION:     //Watersimulation
             dmx_fx_watersimulation(i);
+            break;
+#endif
+#ifdef DMX_FX_STATIC
+          case DMX_FXLIST_STATIC:
+            dmx_fx_static(i);
             break;
 #endif
         }

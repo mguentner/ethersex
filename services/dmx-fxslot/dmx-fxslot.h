@@ -1,6 +1,7 @@
 /*
  *
  * Copyright (c) 2011 by Jonas Eickhoff <jonas02401@googlemail.com>
+ * Copyright (c) 2011-2012 by Maximilian Güntner <maximilian.guentner@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,6 +36,7 @@
 #define DMX_FXLIST_RANDOM 2
 #define DMX_FXLIST_FIRESIMULATION 3
 #define DMX_FXLIST_WATERSIMULATION 4
+#define DMX_FXLIST_STATIC 5
 
 
 struct fxslot_struct
@@ -81,6 +83,10 @@ void dmx_fx_firesimulation(uint8_t);
 
 #ifdef DMX_FX_WATER
 void dmx_fx_watersimulation(uint8_t);
+#endif
+
+#ifdef DMX_FX_STATIC
+void dmx_fx_static(uint8_t);
 #endif
 
 void dmx_fxslot_init(uint8_t);
