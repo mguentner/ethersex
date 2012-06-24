@@ -165,7 +165,8 @@ dmx_fx_static(uint8_t fxslot_number)
   }
   else
   {
-    fxslot[fxslot_number].device_channel[0] = fxslot[fxslot_number].effect_variable[0];
+    fxslot[fxslot_number].device_channel[0] =
+      fxslot[fxslot_number].effect_variable[0];
     fxslot[fxslot_number].effect_variable[1] = 0x42;
     fxslot[fxslot_number].speed = 80;
     dmx_fxslot_setchannels(fxslot_number);
@@ -218,9 +219,9 @@ dmx_fxslot_init(uint8_t fxslot_number)
       break;
 #endif
 #ifdef DMX_FX_STATIC
-    case DMX_FXLIST_STATIC: //static channel
+    case DMX_FXLIST_STATIC:    //static channel
       fxslot[fxslot_number].max_device_channels = 1;
-      fxslot[fxslot_number].effect_variable[0] =  fxslot[fxslot_number].speed;
+      fxslot[fxslot_number].effect_variable[0] = fxslot[fxslot_number].speed;
       fxslot[fxslot_number].effect_variable[1] = 0;
       //set as soon as possible
       fxslot[fxslot_number].speed = 1;
