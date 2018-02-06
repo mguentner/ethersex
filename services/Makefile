@@ -5,6 +5,7 @@ SUBSUBDIRS += services/dmx-storage
 SUBSUBDIRS += services/dmx-fxslot
 SUBSUBDIRS += services/echo
 SUBSUBDIRS += services/freqcount
+SUBSUBDIRS += services/fernmelder
 SUBSUBDIRS += services/pam
 SUBSUBDIRS += services/httpd
 SUBSUBDIRS += services/jabber

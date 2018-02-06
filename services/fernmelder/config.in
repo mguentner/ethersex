@@ -1,0 +1,4 @@
+dep_bool_menu "Fernmelder" FERNMELDER_SUPPORT
+	comment  "Debugging Flags"
+	dep_bool 'Fernmelder Debug' DEBUG_FERNMELDER $DEBUG $FERNMELDER_SUPPORT
+endmenu
