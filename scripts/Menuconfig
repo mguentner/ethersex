@@ -406,12 +406,12 @@ function help () {
 	if [ "x$1" = "ximpossible_ret_cb" ]; then shift; fi
 	if extract_help $1 >help.out
 	then
-		dialog	--backtitle "$backtitle" --title "$2"\
+		$DIALOG	--backtitle "$backtitle" --title "$2"\
 			--exit-label "Exit" \
 			--help-button --help-label "Modify Help Text" \
 			--textbox help.out $ROWS $COLS
 	else
-		dialog	--backtitle "$backtitle" \
+		$DIALOG	--backtitle "$backtitle" \
 			--exit-label "Exit" \
 			--help-button --help-label "Modify Help Text" \
 			--textbox help.out $ROWS $COLS

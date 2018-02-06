@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if test -d .git ; then
     git log --pretty=format:%h -n 1

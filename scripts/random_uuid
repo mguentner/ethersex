@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function random_uuid() {
   printf "%01x" $(($RANDOM % 16 ))
