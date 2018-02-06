@@ -123,7 +123,7 @@ typedef unsigned short uip_stats_t;
 #   define UIP_CONF_UDP             0
 #endif
 
-#define UIP_CONF_UDP_CONNS            5
+#define UIP_CONF_UDP_CONNS         10
 
 /**
  * UDP checksums on or off
