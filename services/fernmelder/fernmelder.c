@@ -147,12 +147,17 @@ uint8_t check_sequence_for_ip(uip_ipaddr_t *ip) {
   for (uint8_t i=0; i < KNOCK_RECORD_HISTORY_SIZE; i++) {
     struct knock_record_t *k = get_last_n_knock_record(i);
     if (uip_ipaddr_cmp(k->addr, ip)) {
-      ///* Same IP */
+      /* Same IP */
       SIRDEBUG("same ip\n");
       if (knock_ports[in_sequence] == k->port) {
         SIRDEBUG("same port\n");
-        ///* Same Port */
+        /* Same Port */
         in_sequence--;
+      } else {
+        /* the sequence has started and ports differ */
+        if (in_sequence < KNOCK_SOCKET_COUNT-1) {
+          break;
+        }
       }
     }
   }
