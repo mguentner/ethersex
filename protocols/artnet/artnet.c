@@ -99,15 +99,16 @@ artnet_init(void)
   artnet_inputUniverse = CONF_ARTNET_INUNIVERSE;
   artnet_outputUniverse = CONF_ARTNET_OUTUNIVERSE;
 #ifdef CONF_ARTNET_SEND_POLL_REPLY
-  artnet_sendPollReplyOnChange = 1;
+  artnet_sendPollReplyOnChange = TRUE;
 #else
-  artnet_sendPollReplyOnChange = 0;
+  artnet_sendPollReplyOnChange = FALSE;
 #endif
   strcpy_P(artnet_shortName, PSTR("e6ArtNode"));
   strcpy_P(artnet_longName, PSTR("e6ArtNode hostname: " CONF_HOSTNAME));
 
   set_CONF_ARTNET_OUTPUT_IP(&artnet_outputTarget);
 
+#ifdef CONF_ARTNET_INUNIVERSE_EN
   /* dmx storage connection */
   artnet_conn_id = dmx_storage_connect(artnet_inputUniverse);
   if (artnet_conn_id != -1)
@@ -121,6 +122,7 @@ artnet_init(void)
     artnet_connected = FALSE;
     ARTNET_DEBUG("Connection to dmx-storage couldn't be established!\r\n");
   }
+#endif
 
   /* net_init */
   artnet_netInit();
@@ -129,8 +131,6 @@ artnet_init(void)
   ARTNET_DEBUG("send PollReply\n");
   artnet_sendPollReply(&all_ones_addr);
 
-  /* enable PollReply on changes */
-  artnet_sendPollReplyOnChange = TRUE;
   ARTNET_DEBUG("init complete\n");
   return;
 }
@@ -275,12 +275,14 @@ processPollPacket(struct artnet_poll *poll)
 void
 artnet_main(void)
 {
+#ifdef CONF_ARTNET_INUNIVERSE_EN
   if (get_dmx_slot_state(artnet_inputUniverse, artnet_conn_id) ==
       DMX_NEWVALUES && artnet_connected == TRUE)
   {
     ARTNET_DEBUG("Universe has changed, sending artnet data!\r\n");
     artnet_sendDmxPacket();
   }
+#endif
 }
 
 
@@ -314,6 +316,7 @@ artnet_get(void)
       ARTNET_DEBUG("Received artnet poll reply packet!\r\n");
       break;
     case OP_OUTPUT:;
+#ifdef CONF_ARTNET_OUTUNIVERSE_EN
       uip_ipaddr_t artnet_pollReplyTarget;
       struct artnet_dmx *dmx;
 
@@ -335,6 +338,7 @@ artnet_get(void)
           }
         }
       }
+#endif
       break;
     case OP_ADDRESS:;
     case OP_IPPROG:;
